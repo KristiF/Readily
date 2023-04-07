@@ -3,7 +3,6 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import Head from "next/head";
 
 export default function FrontpageView(props) {
-    console.log(props.savedArticles)
     return (
     <div>
         <Head>
@@ -19,9 +18,29 @@ export default function FrontpageView(props) {
                     sx={{  display: 'flex', flexDirection: 'column', height:"100%"}}
                 >
                     <a href={"/articles/" + article.id}>
-                    
+                    <CardMedia
+                    component="img"
+                    loading="lazy"
+                    image={"https://firebasestorage.googleapis.com/v0/b/readify-a88ee.appspot.com/o/images%2F" + article.image + "?alt=media"}
+                    alt="random"
+                    />
+                    <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                        {article.title}
+                    </Typography>
+                        
+                    <Typography noWrap>
+                        {article.summary}
+                    </Typography>
+                    </CardContent>
                     </a>
                     <Container sx={{flexGrow: 2}}/>
+                    <CardActions sx={{display:"flex", alignItems:"center", justifyContent:"center"}}>
+                        <IconButton sx={{color: props.savedArticles.includes(article.id) ? "red" : ""}} onClick={() => props.onArticleSave(article.id)}>
+                            <FavoriteIcon/>
+                        </IconButton>
+                    </CardActions>
+           
                 </Card>
                 
                 </Grid>
