@@ -21,10 +21,10 @@ async function fetchArticles() {
   return articles;
 }
 
-export default function ArticlePresenter(props) {
+export default function Article(props) {
     return (
         <div>
-            {props}
+            <ArticleCard props={props}/>
         </div>
     )
 }
