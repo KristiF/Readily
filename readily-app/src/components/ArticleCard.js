@@ -13,7 +13,7 @@ export default function ArticleCard(props) {
                 />
                 <CardContent>
                     <Typography variant="h4">{props.props.title}</Typography>
-                    <Typography sx={{fontWeight: 600}} >{props.props.date}</Typography>
+                    <Typography sx={{fontWeight: 600}} >20th Oct 2022</Typography>
                     <Typography paragraph>{props.props.summary}</Typography>
                 </CardContent>
                 <CardActions>
