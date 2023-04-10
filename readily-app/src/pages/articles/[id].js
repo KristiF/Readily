@@ -1,11 +1,10 @@
 import { collection, getFirestore } from "firebase/firestore";
-import {firebaseConfig} from "../../src/firebaseConfig"
+import { firebaseConfig, app, db } from "../../firebaseConfig"
 import { initializeApp } from "firebase/app";
-import {doc} from "firebase/firestore"
+import { doc } from "firebase/firestore"
 import { getDoc, getDocs } from "firebase/firestore";
+import ArticleCard from "@/components/ArticleCard";
 
-const app = initializeApp(firebaseConfig)
-const db = getFirestore(app)
 
 async function fetchArticle(id) {
   
