@@ -1,4 +1,4 @@
-import { db, app } from "@/firebaseConfig";
+import { db, app } from "src/lib/firebaseConfig";
 
 import { doc, getDoc, collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 
