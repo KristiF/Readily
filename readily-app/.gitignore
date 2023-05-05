@@ -36,3 +36,5 @@ next-env.d.ts
 
 # Firebase Configuration
 .node_modules
+
+.env
