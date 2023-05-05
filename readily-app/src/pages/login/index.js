@@ -1,7 +1,7 @@
-import LoginCard from "../../src/components/LoginCard";
+import LoginCard from "@/components/LoginCard";
 //import { useAuth } from "../../src/context/UserContext";
 import { useState } from "react";
-import Loading from "../../src/components/loading";
+import Loading from "@/components/Loading";
 // import { db } from "../../src/firebaseConfig";
 
 export default function LoginPresenter(props){
@@ -22,10 +22,9 @@ export default function LoginPresenter(props){
 
     return(
         <div>
-            {loading ?
-            <Loading/> :
-            <LoginCard error={error} /> // onLogin = {loginUserACB}
-             }
+
+            <LoginCard error={error} /> 
+
         </div>)
 
 }
