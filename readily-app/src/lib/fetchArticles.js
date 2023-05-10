@@ -1,4 +1,4 @@
-import { db, app } from "src/lib/firebaseConfig";
+import { db } from "./firebaseConfig";
 
 import { doc, getDoc, collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 
@@ -10,4 +10,10 @@ export async function fetchArticles() {
     var articles = []
     articlesSnap.forEach(article=>articles.push({...article.data(), id:article.id}))
     return Promise.all(articles);
+}
+
+export async function fetchArticle(id) {
+    const docRef = doc(db, "articles", id);
+    const docSnap = await getDoc(docRef);
+    return docSnap.data();
 }
