@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import Navbar from "@/components/Navbar";
-import { SessionProvider } from "next-auth/react";
+import { UserDataProvider } from "@/lib/hooks";
 
 export default function App({
   Component,
@@ -8,10 +8,10 @@ export default function App({
 }) {
   return (
     <div>
-      <SessionProvider session={session}>
+      <UserDataProvider>
         <Navbar />
         <Component {...pageProps} />
-      </SessionProvider>
+      </UserDataProvider>
     </div>
   );
 }
