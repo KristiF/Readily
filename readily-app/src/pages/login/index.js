@@ -1,15 +1,13 @@
-import NavbarView from "../../src/views/navbarView";
-import LoginView from "../../src/views/loginView";
-import { useAuth } from "../../src/context/UserContext";
+import LoginCard from "../../src/components/LoginCard";
 import { useState } from "react";
-import Loading from "../../src/components/loading";
-// import { db } from "../../src/firebaseConfig";
+import Loading from "../../src/components/Loading";
+import useUserData from "../../src/lib/hooks";
 
 export default function LoginPresenter(props){
     const [error, setError] = useState(false) 
     // const router = useRouter()
    
-    const {logIn, userData, loading} = useAuth()
+    const {logIn, loading} = useUserData()
 
 
     async function loginUserACB(userData) {
@@ -25,8 +23,8 @@ export default function LoginPresenter(props){
         <div>
             {loading ?
             <Loading/> :
-            <LoginView error={error} onLogin = {loginUserACB}/>
-             }
+            <LoginCard onLogin={loginUserACB}/>
+            }
         </div>)
 
 }
