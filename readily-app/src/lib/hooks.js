@@ -1,10 +1,10 @@
 // import { doc, onSnapshot, getFirestore, updateDoc } from "firebase/firestore";
-import { auth, db } from "./firebase";
+import {auth, db} from "./firebaseConfig"
 import React, { useEffect, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { onAuthStateChanged } from "@firebase/auth";
-import { doc, getFirestore, onSnapshot, updateDoc } from "firebase/firestore";
-import { Mixpanel } from "./mixpanel";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+
 
 export const UserDataContext = React.createContext({user:null, setUser: () => {}})
 
@@ -45,7 +45,7 @@ export const UserDataProvider = ({ children }) => {
     }
   }, [savedArticles, readArticles]);
 
-  function login(email, password) {
+  function logIn(email, password) {
     return signInWithEmailAndPassword(auth, email, password)
   }
 
@@ -54,7 +54,7 @@ export const UserDataProvider = ({ children }) => {
   }
   
   return  (
-    <UserDataContext.Provider value={{ user, loading, login, logout }}>{children}</UserDataContext.Provider> 
+    <UserDataContext.Provider value={{ user, loading, logIn, logout }}>{children}</UserDataContext.Provider> 
   );
 }
 
