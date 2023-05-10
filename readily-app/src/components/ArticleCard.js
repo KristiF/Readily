@@ -1,6 +1,7 @@
 import { Container, Card, CardMedia, Typography, CardContent, CardActions, Button, IconButton } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 export default function ArticleCard(props) {
+    console.log(props)
     return (
         <Container maxWidth="md" sx={{mt: 1, display:"flex-inline", alignItems:"center", justifyContent:"center"}}>
             <Card>
@@ -13,7 +14,7 @@ export default function ArticleCard(props) {
                 />
                 <CardContent>
                     <Typography variant="h4">{props.props.title}</Typography>
-                    <Typography sx={{fontWeight: 600}} >20th Oct 2022</Typography>
+                    <Typography sx={{fontWeight: 600}} >{}</Typography>
                     <Typography paragraph>{props.props.summary}</Typography>
                 </CardContent>
                 <CardActions>
