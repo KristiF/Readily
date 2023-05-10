@@ -1,22 +1,5 @@
-import { collection, getFirestore } from "firebase/firestore";
-import { doc } from "firebase/firestore"
-import { getDoc, getDocs } from "firebase/firestore";
 import ArticleCard from "@/components/ArticleCard";
-import { app, db } from "src/lib/firebaseConfig"
-
-
-async function fetchArticle(id) {
-  const docRef = doc(db, "articles", id);
-  const docSnap = await getDoc(docRef);
-  return docSnap.data();
-}
-
-async function fetchArticles() {
-  let articles = []
-  const articlesSnap = await getDocs(collection(db, "articles"));
-  articlesSnap.forEach(articleDoc=>articles.push({...articleDoc.data(), id:articleDoc.id}))
-  return articles;
-}
+import {fetchArticles, fetchArticle} from "@/lib/fetchArticles";
 
 export default function Article(props) {
     return (
@@ -25,7 +8,6 @@ export default function Article(props) {
         </div>
     )
 }
-
 
 export async function getStaticPaths() {
     const articles = await fetchArticles();
@@ -43,8 +25,8 @@ export async function getStaticPaths() {
     }
   }
 
-  export async function getStaticProps({ params }) {
-    let article = await fetchArticle(params.id) ?? null;
+export async function getStaticProps({ params }) {
+  let article = await fetchArticle(params.id) ?? null;
 
-	  return { props: {...article, date: ""}}
-  } 
+  return { props: JSON.parse(JSON.stringify(article))}
+} 
