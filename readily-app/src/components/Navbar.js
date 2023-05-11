@@ -15,7 +15,6 @@ import { Link, ToggleButtonGroup } from '@mui/material';
 import Image from 'next/image';
 import MuiToggleButton from '@mui/material/ToggleButton';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import { useSession, signOut, signIn } from "next-auth/react";
 
 const ToggleButton = styled(MuiToggleButton)(({ selectedColor }) => ({
   '&.Mui-selected, &.Mui-selected:hover': {
@@ -46,18 +45,48 @@ function Navbar(props) {
     setAnchorElUser(null);
   };
   
+  function handleCategoriesChange(event, category) {
+    if (category)
+        props.onCategoriesChange(category);
+  }
+
+  function renderCategories() {
+    if (!props.displayCategories)
+      return
+    return (
+        <Container sx={{display:"flex", alignItems:"center", justifyContent:"center", bgColor:"white", mb: 1,}}>
+          <ToggleButtonGroup
+            
+            onChange={handleCategoriesChange}
+            value={props.currentCategory}
+            exclusive>
+            {props.displayCategories.map((category) => (
+              <ToggleButton 
+                size="small"
+                value={category}
+                key={category}
+                sx={{
+                  bgcolor:"white", 
+                  color:"black",
+                  
+                  '&:hover': {
+                    bgcolor: "gray",
+                    },  
+                  }}
+              >
+                  {category}
+                </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+
+        </Container>
+    )
+  }
 
   function renderAccountSettings() {
-    const {data: session} = useSession()
-
-    if (!session) {
+    if (!props.loggedIn) {
       return (
-        <Button href="#" onClick={()=>signIn({callbackUrl:"/"})} sx={{color: "white"}}>Log in</Button>
-      )
-    }
-    if(session){
-      return(
-        <Button href="#" onClick={()=>signOut({callbackUrl:"/"})} sx={{color: "white"}}>Sign Out</Button>
+        <Button href="/login" sx={{color: "white"}}>Log in</Button>
       )
     }
     return(
@@ -173,6 +202,7 @@ function Navbar(props) {
 
           {renderAccountSettings()}
         </Toolbar>
+      {renderCategories()}
       </Container>
     </AppBar>
     </Box>
