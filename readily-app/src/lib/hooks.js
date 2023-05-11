@@ -1,9 +1,9 @@
 // import { doc, onSnapshot, getFirestore, updateDoc } from "firebase/firestore";
-import {auth, db} from "./firebaseConfig"
+import { auth, db } from "./firebaseConfig"
 import React, { useEffect, useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { onAuthStateChanged } from "@firebase/auth";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+
 
 
 export const UserDataContext = React.createContext({user:null, setUser: () => {}})
@@ -13,10 +13,14 @@ export const UserDataProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState(null);
-  
+  const [savedArticles, setSavedArticles] = useState([]);
+  const [readArticles, setReadArticles] = useState([]);
+  const [auth, setAuth] = useState(null);
+
+
   useEffect(()=> {
     setLoading(true)
-    var unsubscribe = onAuthStateChanged(auth, (_user) => {
+    var unsubscribe = onAuthStateChanged(getAuth(), (_user) => {
       if (_user) 
         setUser(_user);
       setLoading(false);
@@ -40,13 +44,13 @@ export const UserDataProvider = ({ children }) => {
   }, [user])
 
   useEffect(()=> {
-    if (user && tokens) {
+    if (user) {
       updateDoc(doc(db, "users", user.uid), {"tokens": tokens, "unlockedArticles": unlockedArticles})
     }
   }, [savedArticles, readArticles]);
 
   function logIn(email, password) {
-    return signInWithEmailAndPassword(auth, email, password)
+    return signInWithEmailAndPassword(getAuth(), email, password)
   }
 
   function logout() {
