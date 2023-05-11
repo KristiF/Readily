@@ -69,6 +69,8 @@ export default function SignupCard(props) {
                 <TextField
                   required
                   fullWidth
+                  onChange={props.setNewEmailValue}
+                  value={props.emailValue}
                   id="email"
                   label="Email Address"
                   name="email"
@@ -79,6 +81,8 @@ export default function SignupCard(props) {
                 <TextField
                   required
                   fullWidth
+                  onChange={props.setNewPasswordValue}
+                  value={props.passwordValue}
                   name="password"
                   label="Password"
                   type="password"
