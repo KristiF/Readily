@@ -6,7 +6,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { onAuthStateChanged, getAuth } from "@firebase/auth";
-import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc, setDoc } from "firebase/firestore";
 
 export const UserDataContext = React.createContext({
   user: null,
@@ -18,8 +18,8 @@ export const UserDataProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState(null);
-  const [savedArticles, setSavedArticles] = useState(null)
-  const [readArticles, setReadArticles] = useState(null)
+  const [savedArticles, setSavedArticles] = useState(null);
+  const [readArticles, setReadArticles] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -65,7 +65,15 @@ export const UserDataProvider = ({ children }) => {
   }
 
   function signup(email, password) {
-    return createUserWithEmailAndPassword(getAuth(), email, password);
+    return createUserWithEmailAndPassword(getAuth(), email, password).then(
+      (resp) => {
+        setDoc(doc(db, "users", resp.user.uid), {
+          email: email,
+          savedArticles: [],
+          readArticles: [],
+        });
+      }
+    );
   }
 
   return (
