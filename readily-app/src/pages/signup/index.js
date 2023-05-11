@@ -1,14 +1,12 @@
 import SignupCard from "@/components/SignupCard";
-import { useContext } from 'react';
-import { UserDataContext } from '@/lib/hooks';
+import { useContext } from "react";
+import { UserDataContext } from "@/lib/hooks";
 
-export default function Signup(props) {
-    const {signup} = useContext(UserDataContext)
+export default function Signup() {
+  const { signup } = useContext(UserDataContext);
 
-    function handleSignup(userData){
-        console.log(userData.get("firstName"))
-    }
-    return (
-        <SignupCard onSignup = {handleSignup}/>
-    )
+  async function handleSignup(userData) {
+    await signup(userData.get("email"), userData.get("password"));
+  }
+  return <SignupCard onSignup={handleSignup} />;
 }

@@ -65,7 +65,7 @@ export const UserDataProvider = ({ children }) => {
   }
 
   function signup(email, password) {
-    return createUserWithEmailAndPassword(email, password);
+    return createUserWithEmailAndPassword(getAuth(), email, password);
   }
 
   return (

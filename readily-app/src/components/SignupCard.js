@@ -86,7 +86,6 @@ export default function SignupCard(props) {
                   autoComplete="new-password"
                 />
               </Grid>
-            </Grid>
             <Button
               type="submit"
               fullWidth
