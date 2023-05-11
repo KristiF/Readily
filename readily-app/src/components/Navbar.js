@@ -15,7 +15,6 @@ import { Link, ToggleButtonGroup } from '@mui/material';
 import Image from 'next/image';
 import MuiToggleButton from '@mui/material/ToggleButton';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import { useSession, signOut, signIn } from "next-auth/react";
 
 const ToggleButton = styled(MuiToggleButton)(({ selectedColor }) => ({
   '&.Mui-selected, &.Mui-selected:hover': {
@@ -48,18 +47,18 @@ function Navbar(props) {
   
 
   function renderAccountSettings() {
-    const {data: session} = useSession()
+    // const {data: session} = useSession()
 
-    if (!session) {
-      return (
-        <Button href="#" onClick={()=>signIn({callbackUrl:"/"})} sx={{color: "white"}}>Log in</Button>
-      )
-    }
-    if(session){
-      return(
-        <Button href="#" onClick={()=>signOut({callbackUrl:"/"})} sx={{color: "white"}}>Sign Out</Button>
-      )
-    }
+    // if (!session) {
+    //   return (
+    //     <Button href="#" onClick={()=>signIn({callbackUrl:"/"})} sx={{color: "white"}}>Log in</Button>
+    //   )
+    // }
+    // if(session){
+    //   return(
+    //     <Button href="#" onClick={()=>signOut({callbackUrl:"/"})} sx={{color: "white"}}>Sign Out</Button>
+    //   )
+    // }
     return(
       <Box sx={{ml:'auto'}}>
               <Tooltip title="Open settings">

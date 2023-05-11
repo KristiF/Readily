@@ -8,10 +8,9 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { db } from '../lib/firebaseConfig';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { useRouter } from 'next/router';
-import { collection, setDoc, doc } from 'firebase/firestore'
+import { useContext } from 'react';
+import { UserDataContext } from '@/lib/hooks';
+
 import { Alert } from '@mui/material';
 
 

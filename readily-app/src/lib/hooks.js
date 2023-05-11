@@ -1,60 +1,76 @@
 // import { doc, onSnapshot, getFirestore, updateDoc } from "firebase/firestore";
-import {auth, db} from "./firebaseConfig"
+import { auth, db } from "./firebaseConfig";
 import React, { useEffect, useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { onAuthStateChanged } from "@firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+import { onAuthStateChanged, getAuth } from "@firebase/auth";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 
-
-export const UserDataContext = React.createContext({user:null, setUser: () => {}})
+export const UserDataContext = React.createContext({
+  user: null,
+  setUser: () => {},
+});
 
 // Custom hook to read  auth record and user profile doc
 export const UserDataProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState(null);
-  
-  useEffect(()=> {
-    setLoading(true)
-    var unsubscribe = onAuthStateChanged(auth, (_user) => {
-      if (_user) 
-        setUser(_user);
+  const [savedArticles, setSavedArticles] = useState(null)
+  const [readArticles, setReadArticles] = useState(null)
+
+  useEffect(() => {
+    setLoading(true);
+    var unsubscribe = onAuthStateChanged(getAuth(), (_user) => {
+      if (_user) setUser(_user);
       setLoading(false);
     });
     return unsubscribe;
-  }, [])
+  }, []);
 
-  useEffect(()=> {
+  useEffect(() => {
     if (user) {
       setLoading(true);
-      const ref =  (doc(db, "users", user.uid));
-      var unsubscribe = onSnapshot(ref, (docSnap)=> {
-        if (docSnap.exists()){ 
-          const _name = `${docSnap.data().firstName} ${docSnap.data().lastName}`
-          setName(_name)
+      const ref = doc(db, "users", user.uid);
+      var unsubscribe = onSnapshot(ref, (docSnap) => {
+        if (docSnap.exists()) {
+          const _name = `${docSnap.data().firstName} ${
+            docSnap.data().lastName
+          }`;
+          setName(_name);
         }
-        setLoading(false) 
+        setLoading(false);
       });
     }
     return unsubscribe;
-  }, [user])
+  }, [user]);
 
-  useEffect(()=> {
+  useEffect(() => {
     if (user && tokens) {
-      updateDoc(doc(db, "users", user.uid), {"tokens": tokens, "unlockedArticles": unlockedArticles})
+      updateDoc(doc(db, "users", user.uid), {
+        tokens: tokens,
+        unlockedArticles: unlockedArticles,
+      });
     }
   }, [savedArticles, readArticles]);
 
   function logIn(email, password) {
-    return signInWithEmailAndPassword(auth, email, password)
+    return signInWithEmailAndPassword(auth, email, password);
   }
 
   function logout() {
     return auth.signOut();
   }
-  
-  return  (
-    <UserDataContext.Provider value={{ user, loading, logIn, logout }}>{children}</UserDataContext.Provider> 
-  );
-}
 
+  function signup(email, password) {
+    return createUserWithEmailAndPassword(email, password);
+  }
+
+  return (
+    <UserDataContext.Provider value={{ user, loading, logIn, logout, signup }}>
+      {children}
+    </UserDataContext.Provider>
+  );
+};
