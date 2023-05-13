@@ -84,11 +84,18 @@ function Navbar(props) {
   }
 
   function renderAccountSettings() {
-    if (!props.loggedIn) {
-      return (
-        <Button href="/login" sx={{color: "white"}}>Log in</Button>
-      )
-    }
+    // const {data: session} = useSession()
+
+    // if (!session) {
+    //   return (
+    //     <Button href="#" onClick={()=>signIn({callbackUrl:"/"})} sx={{color: "white"}}>Log in</Button>
+    //   )
+    // }
+    // if(session){
+    //   return(
+    //     <Button href="#" onClick={()=>signOut({callbackUrl:"/"})} sx={{color: "white"}}>Sign Out</Button>
+    //   )
+    // }
     return(
       <Box sx={{ml:'auto'}}>
               <Tooltip title="Open settings">
