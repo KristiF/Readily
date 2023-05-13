@@ -6,7 +6,14 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { onAuthStateChanged, getAuth } from "@firebase/auth";
-import { doc, onSnapshot, updateDoc, setDoc } from "firebase/firestore";
+import {
+  doc,
+  onSnapshot,
+  updateDoc,
+  setDoc,
+  arrayUnion,
+  arrayRemove,
+} from "firebase/firestore";
 
 export const UserDataContext = React.createContext({
   user: null,
@@ -76,8 +83,13 @@ export const UserDataProvider = ({ children }) => {
     );
   }
 
+  function likeArticle(articleId, uid) {
+    const userDocRef = doc(db, "users", uid);
+    return updateDoc(userDocRef, { savedArticles: arrayUnion(articleId) });
+  }
+
   return (
-    <UserDataContext.Provider value={{ user, loading, logIn, logout, signup }}>
+    <UserDataContext.Provider value={{ user, loading, logIn, logout, signup, likeArticle }}>
       {children}
     </UserDataContext.Provider>
   );
