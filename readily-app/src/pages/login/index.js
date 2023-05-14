@@ -14,16 +14,13 @@ export default function LoginPresenter(props){
         .then(router.push("/"))
         .catch(err=>setError(err.message))
        
-        // await signInWithEmailAndPassword(auth, userData.get("email"), userData.get("password"))
-        // .then((userCredentials) => setUser(userCredentials))
-        // .catch((err)=>{setError(err);console.log(err)})
     }
 
     return(
         <div>
             {loading ?
             <Loading/> :
-            <LoginCard onLogin={loginUser}/>
+            <LoginCard onLogin={loginUser} error={error}/>
             }
         </div>)
 

@@ -48,6 +48,7 @@ export default function LoginCard(props) {
               fullWidth
               id="email"
               label="Email Address"
+              error={props.error}
               name="email"
               autoComplete="email"
               autoFocus
@@ -57,6 +58,7 @@ export default function LoginCard(props) {
               required
               fullWidth
               name="password"
+              error={props.error}
               label="Password"
               type="password"
               id="password"

@@ -75,7 +75,9 @@ export default function ProfileCard(props) {
                 margin="dense"
                 id="New Password"
                 value={props.newPassword}
+                onChange={props.onChangeNewPassword}
                 label="New password"
+                error={props.passwordError}
                 type="password"
                 fullWidth
                 variant="standard"
@@ -85,8 +87,10 @@ export default function ProfileCard(props) {
                 margin="dense"
                 id="Confirm New Password"
                 value={props.confirmNewPassword}
+                onChange={props.onChangeConfirmNewPassword}
                 label="Confirm New Password"
-                type="passwords"
+                type="password"
+                error={props.passwordError}
                 fullWidth
                 variant="standard"
               />
