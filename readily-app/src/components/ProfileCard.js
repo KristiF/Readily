@@ -10,13 +10,13 @@ export default function ProfileCard(props) {
   function handleEmailChange(event) {
     event.preventDefault();
     const userData = new FormData(event.currentTarget);
-    props.onEmailChange(userData);
+    props.onChangeEmail(userData);
   }
 
   function handlePasswordChange(event) {
     event.preventDefault();
     const userData = new FormData(event.currentTarget);
-    props.onPasswordChange(userData);
+    props.onChangePassword(userData);
   }
 
   return (
@@ -36,12 +36,12 @@ export default function ProfileCard(props) {
         <Card sx={{ minWidth: 500 }}>
           <CardContent>
             <Typography>Email</Typography>
-            <Box component="form">
+            <Box component="form" onSubmit={handleEmailChange}>
               <TextField
                 autoFocus
                 margin="dense"
                 id="Current Email"
-                label={props.email}
+                label="Current Email"
                 type="Current Email"
                 fullWidth
                 variant="standard"
@@ -59,7 +59,6 @@ export default function ProfileCard(props) {
                 size="small"
                 type="submit"
                 variant="outlined"
-                onClick={handleEmailChange}
               >
                 Change Email
               </Button>
@@ -72,7 +71,7 @@ export default function ProfileCard(props) {
         <Card sx={{ minWidth: 500 }}>
           <CardContent>
             <Typography>Password</Typography>
-            <Box component="form">
+            <Box component="form" onSubmit={handlePasswordChange}>
               <TextField
                 autoFocus
                 margin="dense"
@@ -96,7 +95,6 @@ export default function ProfileCard(props) {
                 size="small"
                 type="submit"
                 variant="outlined"
-                onClick={handlePasswordChange}
               >
                 Change Password
               </Button>

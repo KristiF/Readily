@@ -13,11 +13,14 @@ export default function profile() {
     }
   }, [user]);
 
+  function onChangeEmail(userData){console.log(userData.get("Current Email"))}
+  function onChangePassword(userData){console.log(userData)}
+
   return (
     <ProfileCard
       email={email}
-      onChangeEmail={changeEmail}
-      onChangePassword={changePassword}
+      onChangeEmail={onChangeEmail}
+      onChangePassword={onChangePassword}
     />
   );
 }
