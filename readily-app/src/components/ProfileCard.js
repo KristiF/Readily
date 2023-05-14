@@ -64,11 +64,7 @@ export default function ProfileCard(props) {
               </Button>
             </Box>
           </CardContent>
-        </Card>
 
-        <br />
-
-        <Card sx={{ minWidth: 500 }}>
           <CardContent>
             <Typography>Password</Typography>
             <Box component="form" onSubmit={handlePasswordChange}>
