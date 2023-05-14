@@ -20,13 +20,61 @@ export default function ProfileCard(props) {
 
   function renderEmailError() {
     if (props.emailError) {
-      return <Alert severity="error">{props.emailError}</Alert>;
+      let error;
+      switch (props.emailError) {
+        case "Firebase: Error (auth/requires-recent-login).":
+          error = "Please reautheticate yourself";
+          break;
+        case "empty email field":
+          error = "Please enter your current email";
+          break;
+        case "no new email":
+          error = "Please enter your new email";
+          break;
+        case "empty email fields":
+          error = "Both fields cannot be empty";
+          break;
+        case "Firebase: Error (auth/missing-email).":
+          error = "You must specify your email adress";
+          break;
+        case "Firebase: Error (auth/email-already-in-use).":
+          error = "Email already exists";
+          break;
+        case "Firebase: Error (auth/invalid-email).":
+          error = "Invalid email adress";
+          break;
+        case "empty email":
+          error = "Email field cannot be empty";
+          break;
+      }
+      return <Alert severity="error">{error}</Alert>;
     }
   }
 
   function renderPasswordError() {
     if (props.passwordError) {
-      return <Alert severity="error">{props.passwordError}</Alert>;
+      let error;
+      switch (props.passwordError) {
+        case "Firebase: Error (auth/requires-recent-login).":
+          error = "Please reautheticate yourself";
+          break;
+        case "Firebase: Password should be at least 6 characters (auth/weak-password).":
+          error = "Password must be at least 6 characters long";
+          break;
+        case "empty password":
+          error = "Password field cannot be empty";
+          break;
+        case "empty confirm password":
+          error = "Please confirm your password";
+          break;
+        case "both password fields empty":
+          error = "Both fields cannot be empty";
+          break;
+        case "no match":
+          error = "The passwords don't match";
+          break;
+      }
+      return <Alert severity="error">{error}</Alert>;
     }
   }
 

@@ -38,6 +38,15 @@ export default function SignupCard(props) {
         case "empty password":
           error = "Password field cannot be empty";
           break;
+        case "blank confirm field":
+          error = "Please confirm your password";
+          break;
+        case "no match":
+          error = "The passwords don't match";
+          break;
+        case "empty email":
+          error = "Email field cannot be empty";
+          break;
       }
       return <Alert severity="error">{error}</Alert>;
     }
@@ -69,6 +78,7 @@ export default function SignupCard(props) {
           <TextField
             required
             fullWidth
+            error={props.error}
             onChange={props.onEmailChange}
             value={props.email}
             id="email"
@@ -80,12 +90,26 @@ export default function SignupCard(props) {
           <TextField
             required
             fullWidth
+            error={props.error}
             onChange={props.onPasswordChange}
             value={props.password}
             name="password"
             label={props.password ? "" : "Password"}
             type="password"
             id="password"
+            autoComplete="new-password"
+          />
+
+          <TextField
+            required
+            fullWidth
+            error={props.error}
+            onChange={props.onConfirmPasswordChange}
+            value={props.confirmPassword}
+            name="password"
+            label={props.confirmPassword ? "" : "Confirm Password"}
+            type="password"
+            id="confirm password"
             autoComplete="new-password"
           />
           <Button type="submit" fullWidth sx={{ mt: 3, mb: 2 }}>

@@ -10,17 +10,32 @@ export default function profile() {
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const [emailError, setEmailError] = useState(null);
-  const [passwordError, setPasswordError] = useState(null);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
   function onChangeEmail() {
-    changeEmail(user, newEmail)
-      .then(() => {
-        setCurrentEmail("");
-        setNewEmail("");
-        setEmailError(null);
-      })
-      .catch((error) => setEmailError(error.message));
+    if (currentEmail === "") {
+      setEmailError("empty email field");
+      return
+    }
+    if (newEmail === "") {
+      setEmailError("no new email");
+      return
+    }
+    if (currentEmail === "" && newEmail === "") {
+      setEmailError("empty email fields");
+      return
+    } else {
+      changeEmail(user, newEmail)
+        .then(() => {
+          if (!emailError) {
+            setCurrentEmail("");
+            setNewEmail("");
+          }
+        })
+        .then(() => setEmailError(false))
+        .catch((error) => setEmailError(error.message));
+    }
   }
   function onChangePassword() {
     if (newPassword == confirmNewPassword) {
@@ -28,11 +43,24 @@ export default function profile() {
         .then(() => {
           setNewPassword("");
           setConfirmNewPassword("");
-          setPasswordError(null);
         })
+        .then(setPasswordError(false))
         .catch((error) => setPasswordError(error.message));
+    }
+
+    if (newPassword === "") {
+      setPasswordError("empty password");
+      return
+    }
+    if (confirmNewPassword === "") {
+      setPasswordError("empty confirm password");
+      return
+    }
+    if (confirmNewPassword === "" && newPassword === "") {
+      setPasswordError("both password fields empty");
+      return
     } else {
-      setPasswordError("Passwords don't match!");
+      setPasswordError("no match");
     }
   }
 
