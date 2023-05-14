@@ -5,6 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
+import { Alert } from "@mui/material";
 
 export default function ProfileCard(props) {
   function handleEmailChange(event) {
@@ -15,6 +16,18 @@ export default function ProfileCard(props) {
   function handlePasswordChange(event) {
     event.preventDefault();
     props.onSubmitChangePassword();
+  }
+
+  function renderEmailError() {
+    if (props.emailError) {
+      return <Alert severity="error">{props.emailError}</Alert>;
+    }
+  }
+
+  function renderPasswordError() {
+    if (props.passwordError) {
+      return <Alert severity="error">{props.passwordError}</Alert>;
+    }
   }
 
   return (
@@ -31,6 +44,8 @@ export default function ProfileCard(props) {
           alignItems: "center",
         }}
       >
+        {renderEmailError()}
+
         <Card sx={{ minWidth: 500 }}>
           <CardContent>
             <Typography>Email</Typography>
@@ -65,6 +80,7 @@ export default function ProfileCard(props) {
             </Box>
           </CardContent>
 
+          {renderPasswordError()}
           <CardContent>
             <Typography>Password</Typography>
             <Box component="form" onSubmit={handlePasswordChange}>

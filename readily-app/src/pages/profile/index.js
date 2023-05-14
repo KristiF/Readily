@@ -20,7 +20,7 @@ export default function profile() {
         setNewEmail("");
         setEmailError(null);
       })
-      .catch((error) => setEmailError(error));
+      .catch((error) => setEmailError(error.message));
   }
   function onChangePassword() {
     if (newPassword == confirmNewPassword) {
@@ -30,7 +30,7 @@ export default function profile() {
           setConfirmNewPassword("");
           setPasswordError(null);
         })
-        .catch((error) => setPasswordError(error));
+        .catch((error) => setPasswordError(error.message));
     } else {
       setPasswordError("Passwords don't match!");
     }
