@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import Navbar from "@/components/Navbar";
 
 export default function Home() {
-  const { savedArticles, setSavedArticles, user, logOut } = useContext(UserDataContext);
+  const { savedArticles, setSavedArticles, user, logOut, readArticles, setReadArticles } = useContext(UserDataContext);
   const [articles, setArticles] = useState([])
   const [loadMoreArticles, setLoadMoreArticles] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -60,6 +60,7 @@ export default function Home() {
   }, [, currentCategory]);
 
   function onArticleView(id) {
+    setReadArticles([...readArticles, id]);
     router.push("/articles/" + id);
   }
 
@@ -88,7 +89,8 @@ export default function Home() {
                 if (article.date)
                 return (
                   <Grid item xs={12} key={article.id} sm={6} md={4}>
-                    <FrontpageCard 
+                    <FrontpageCard
+                      isRead={readArticles?.includes(article.id)} 
                       article={article} 
                       onArticleSave={handleArticleSave}
                       onArticleView={onArticleView}
