@@ -4,7 +4,10 @@ import React, { useEffect, useState } from "react";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  signOut
+  updateEmail,
+  updatePassword,
+  signOut,
+  reauthenticateWithCredential
 } from "firebase/auth";
 import { onAuthStateChanged, getAuth } from "@firebase/auth";
 import {
@@ -19,7 +22,7 @@ import {
 export const UserDataContext = React.createContext({
   user: null,
   savedArticles: [],
-  readArticles : []
+  readArticles: [],
 });
 
 // Custom hook to read  auth record and user profile doc
@@ -75,6 +78,14 @@ export const UserDataProvider = ({ children }) => {
     return signOut(getAuth());
   }
 
+  async function changeEmail(currentUser, newEmail) {
+    return updateEmail(currentUser, newEmail);
+  }
+
+  async function changePassword(currentUser, newPassword) {
+    return updatePassword(currentUser, newPassword);
+  }
+
   async function signUp(email, password) {
     return createUserWithEmailAndPassword(getAuth(), email, password).then(
       (resp) => {
@@ -88,7 +99,19 @@ export const UserDataProvider = ({ children }) => {
   }
 
   return (
-    <UserDataContext.Provider value={{ user, loading, logIn, logOut, signUp, savedArticles, setSavedArticles }}>
+    <UserDataContext.Provider
+      value={{
+        user,
+        loading,
+        logIn,
+        logOut,
+        signUp,
+        savedArticles,
+        setSavedArticles,
+        changeEmail,
+        changePassword,
+      }}
+    >
       {children}
     </UserDataContext.Provider>
   );
