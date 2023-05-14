@@ -34,9 +34,14 @@ export default function ArticleCard(props) {
                     <Typography paragraph>{props.props.summary}</Typography>
                 </CardContent>
                 <CardActions>
-                    <IconButton>
-                        <FavoriteIcon/>
-                    </IconButton>
+                <IconButton
+                    id="save-button"
+                    onClick={() => {
+                    props.onArticleSave(props.props.id);
+                    }}
+                >
+                    <FavoriteIcon sx={props.savedArticles?.includes(props.props.id) ? {color: "red"} : {}}/>
+                </IconButton>
                     <Button href={props.props.url}>Read full article</Button>
                 </CardActions>
             </Card>
