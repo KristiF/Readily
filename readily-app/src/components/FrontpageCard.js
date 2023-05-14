@@ -49,7 +49,7 @@ export default function FrontpageCard(props) {
   };
   return (
     <div onClick={handleClick}>
-      <Card style={{cursor:"pointer"}}sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      <Card style={{cursor:"pointer"}}sx={{ display: "flex", flexDirection: "column", height: "100%", opacity: props.isRead ? 0.5 : 1 }}>
         <Box sx={{ position: 'relative' }}>
           <CardMedia
             component="img"
