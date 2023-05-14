@@ -2,26 +2,30 @@ import SignupCard from "@/components/SignupCard";
 import { useContext } from "react";
 import { UserDataContext } from "@/lib/hooks";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 export default function Signup() {
-  const { signup } = useContext(UserDataContext);
-  const [passwordValue, setNewPasswordValue] = useState("");
-  const [emailValue, setNewEmailValue] = useState("");
+  const { user, signUp } = useContext(UserDataContext);
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState(false);
+  const router = useRouter();
 
   async function handleSignup(userData) {
-    setNewPasswordValue("");
-    setNewEmailValue("");
-    await signup(userData.get("email"), userData.get("password"));
+    signUp(email, password)
+    .catch(err => setError(err.message))
+    .then(() => {if (user) {router.push("/")}});
   }
 
   return (
     <SignupCard
+      error={error}
       onSignup={handleSignup}
-      passwordValue={passwordValue}
-      emailValue={emailValue}
-      setNewEmailValue={(newEmail) => setNewEmailValue(newEmail.target.value)}
-      setNewPasswordValue={(newPassword) =>
-        setNewPasswordValue(newPassword.target.value)
+      password={password}
+      email={email}
+      onEmailChange={(newEmail) => setEmail(newEmail.target.value)}
+      onPasswordChange={(newPassword) =>
+        setPassword(newPassword.target.value)
       }
     />
   );
