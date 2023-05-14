@@ -19,6 +19,7 @@ export default function Signup() {
         .then(() => {
           if (user && !error) {
             router.push("/");
+
           }
         })
         .then(setError(false));
@@ -35,6 +36,8 @@ export default function Signup() {
     else if(confirmPassword !== password){
       setError("no match")
     }
+
+
 
   }
 

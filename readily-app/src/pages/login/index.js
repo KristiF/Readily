@@ -4,7 +4,7 @@ import Loading from "../../components/Loading";
 import { useRouter } from "next/router";
 import { UserDataContext } from "@/lib/hooks";
 
-export default function Login(props){
+export default function Login(){
     const [error, setError] = useState(false) 
     const router = useRouter()
    

@@ -12,8 +12,7 @@ import { Alert } from "@mui/material";
 export default function SignupCard(props) {
   function handleSubmitACB(event) {
     event.preventDefault();
-    const userData = new FormData(event.currentTarget);
-    props.onSignup(userData);
+    props.onSignup();
   }
 
   function renderErrors() {
