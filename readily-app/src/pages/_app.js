@@ -24,6 +24,7 @@ function AppContent({ Component, pageProps }) {
   }	
   
   return (
+    
     <div>
       {(router.pathname !== "/") &&
         <Navbar user={user} onLogOut={()=>handleLogout()}/>
