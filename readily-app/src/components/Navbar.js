@@ -15,18 +15,12 @@ import { Link, ToggleButtonGroup } from '@mui/material';
 import Image from 'next/image';
 import MuiToggleButton from '@mui/material/ToggleButton';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-
-const ToggleButton = styled(MuiToggleButton)(({ selectedColor }) => ({
-  '&.Mui-selected, &.Mui-selected:hover': {
-    color: 'white',
-    backgroundColor: selectedColor,
-  },
-}));
-
-
+import { useRouter } from 'next/router';
+import {ToggleButton} from '@mui/material';
 const pages = [['', ""]]
 
 function Navbar(props) {
+  const router = useRouter()
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
  
@@ -50,13 +44,13 @@ function Navbar(props) {
         props.onCategoriesChange(category);
   }
 
-  function renderCategories() {
+  function renderCategories(orientation) {
     if (!props.displayCategories)
       return
     return (
-        <Container sx={{display:"flex", alignItems:"center", justifyContent:"center", bgColor:"white", mb: 1,}}>
+        <Container sx={{display:"flex", alignItems:"center", justifyContent:"center", bgColor:"white", mb: 1, }}>
           <ToggleButtonGroup
-            
+            orientation={orientation}
             onChange={handleCategoriesChange}
             value={props.currentCategory}
             exclusive>
@@ -66,8 +60,7 @@ function Navbar(props) {
                 value={category}
                 key={category}
                 sx={{
-                  bgcolor:"white", 
-                  color:"black",
+                  color:"white",
                   
                   '&:hover': {
                     bgcolor: "gray",
@@ -82,20 +75,15 @@ function Navbar(props) {
         </Container>
     )
   }
-
   function renderAccountSettings() {
     // const {data: session} = useSession()
-
-    // if (!session) {
-    //   return (
-    //     <Button href="#" onClick={()=>signIn({callbackUrl:"/"})} sx={{color: "white"}}>Log in</Button>
-    //   )
-    // }
-    // if(session){
-    //   return(
-    //     <Button href="#" onClick={()=>signOut({callbackUrl:"/"})} sx={{color: "white"}}>Sign Out</Button>
-    //   )
-    // }
+    if (!props.user) {
+      return (
+        <Box sx={{ml:'auto'}}>
+          <Button href="#" onClick={()=>router.push("/login")} sx={{color: "white"}}>Log in</Button>
+        </Box>
+      )
+    }
     return(
       <Box sx={{ml:'auto'}}>
               <Tooltip title="Open settings">
@@ -129,11 +117,11 @@ function Navbar(props) {
                       <Typography textAlign="center">Saved articles</Typography>
                     </MenuItem>
                   </Link>
-                  <Link href="/signout" sx={{textDecoration:"none", color:"inherit"}}>
-                  <MenuItem key={"Sign out"} onClick={handleCloseUserMenu}>
+                  
+                  <MenuItem key={"Sign out"} onClick={()=>props.onLogOut()}>
                     <Typography textAlign="center">Sign out</Typography>
                   </MenuItem>
-                  </Link>
+                
               </Menu>
             </Box>
     )
@@ -142,13 +130,13 @@ function Navbar(props) {
   return (
     <Box sx={{ display: 'flex' }}>
       
-    <AppBar className="navbar" sx={{"bgcolor": "#152b4f"}} position="sticky">
+    <AppBar sx={{"bgcolor": "#152b4f"}} position="sticky">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Toolbar sx={{
-            display: { xs: 'none', md: 'flex' }, 
-            mt: 1,  
-          }} >
+              display: { xs: 'none', md: 'flex' }, 
+              mt: 1,  
+            }} >
             <Link href="/"><Image alt="logo" src="/logo-inverted.png" width={60} height={60}/></Link>
           </Toolbar>
 
@@ -181,11 +169,7 @@ function Navbar(props) {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page[0]} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center"><Link href={page[1]}>{page[0]}</Link></Typography>
-                </MenuItem>
-              ))}
+              {renderCategories("vertical")}
             </Menu>
           </Box>
           <Toolbar sx={{
@@ -193,23 +177,13 @@ function Navbar(props) {
             }}>
             <Link href="/"><Image alt="logo" src="/logo-inverted.png" width={60} height={60}/></Link>
           </Toolbar>
-         
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page[0]}
-                href={page[1]}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page[0]}
-              </Button>
-            ))}
-          </Box>
 
           {renderAccountSettings()}
         </Toolbar>
-      {renderCategories()}
+        <Toolbar sx={{display:
+          props.displayCategories ? {xs: "none", md:"flex"} : "none"}}>
+          {renderCategories("horizontal")}
+        </Toolbar>
       </Container>
     </AppBar>
     </Box>
