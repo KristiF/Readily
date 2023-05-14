@@ -35,7 +35,7 @@ export default function Home() {
   useEffect(() => {
     if (loadMoreArticles) {
       fetchMoreArticles(currentCategory, articles[articles.length-1])
-        .then((_articles) => setArticles([...articles, ..._articles]))
+        .then((_articles) => setArticles([...articles, ..._articles ?? []]))
         .then(()=>{
           setLoadMoreArticles(false)
         })
