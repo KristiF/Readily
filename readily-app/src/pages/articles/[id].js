@@ -1,10 +1,14 @@
 import ArticleCard from "@/components/ArticleCard";
 import {fetchArticles, fetchArticle} from "@/lib/fetchArticles";
-
+import { useRouter } from "next/router";
 export default function Article(props) {
+  const router = useRouter()
+    function handleReturn() {
+        router.push("/")
+    }
     return (
         <div>
-            <ArticleCard props={props}/>
+            <ArticleCard onReturn={handleReturn} props={props}/>
         </div>
     )
 }
