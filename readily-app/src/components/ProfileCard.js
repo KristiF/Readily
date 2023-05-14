@@ -14,7 +14,7 @@ export default function ProfileCard(props) {
 
   function handlePasswordChange(event) {
     event.preventDefault();
-    props.onChangePassword();
+    props.onSubmitChangePassword();
   }
 
   return (
@@ -73,18 +73,20 @@ export default function ProfileCard(props) {
               <TextField
                 autoFocus
                 margin="dense"
-                id="Current Password"
-                label="Current password"
-                type="Current Password"
+                id="New Password"
+                value={props.newPassword}
+                label="New password"
+                type="password"
                 fullWidth
                 variant="standard"
               />
               <TextField
                 autoFocus
                 margin="dense"
-                id="New Password"
-                label="New Password"
-                type="New Password"
+                id="Confirm New Password"
+                value={props.confirmNewPassword}
+                label="Confirm New Password"
+                type="passwords"
                 fullWidth
                 variant="standard"
               />

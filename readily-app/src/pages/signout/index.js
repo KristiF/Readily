@@ -3,9 +3,9 @@ import { useContext, useEffect } from "react";
 import { UserDataContext } from "@/lib/hooks";
 import { useRouter } from "next/router";
 export default function Signout(props){
-    const {logout, user} = useContext(UserDataContext)
+    const {logOut, user} = useContext(UserDataContext)
     useEffect(function logOutUser() {
-        logout().then(()=> {
+        logOut().then(()=> {
         if (!user)
             window.location.href = "/"
         })

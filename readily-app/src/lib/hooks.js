@@ -7,6 +7,7 @@ import {
   updateEmail,
   updatePassword,
   signOut,
+  reauthenticateWithCredential
 } from "firebase/auth";
 import { onAuthStateChanged, getAuth } from "@firebase/auth";
 import {

@@ -6,31 +6,35 @@ export default function profile() {
   const { user, changeEmail, changePassword } = useContext(UserDataContext);
   const [currentEmail, setCurrentEmail] = useState(null);
   const [newEmail, setNewEmail] = useState(null);
-
-  useEffect(() => {
-    if (user) {
-      setCurrentEmail(user.email);
-    }
-  }, [user]);
+  const [newPassword, setNewPassword] = useState(null);
+  const [confirmNewPassword, setConfirmNewPassword] = useState(null);
 
   function onChangeEmail() {
-    changeEmail(user, newEmail)
+    changeEmail(user, newEmail);
     setCurrentEmail("");
     setNewEmail("");
   }
   function onChangePassword() {
-      changePassword(user, newPassword)
+    changePassword(user, newPassword);
   }
 
   return (
     <ProfileCard
       currentEmail={currentEmail}
+      newEmail={newEmail}
+      newPassword={newPassword}
+      confirmNewPassword={confirmNewPassword}
       onChangeCurrentEmail={(alteredCurrentEmail) =>
         setCurrentEmail(alteredCurrentEmail.target.value)
       }
-      newEmail={newEmail}
       onChangeNewEmail={(newEmail) => setNewEmail(newEmail.target.value)}
-      onChangePassword={onChangePassword}
+      onChangeNewPassword={(newPassword) =>
+        setNewPassword(newPassword.target.value)
+      }
+      onChangeConfirmNewPassword={(confirmNewPassword) =>
+        setConfirmNewPassword(confirmNewPassword.target.value)
+      }
+      onSubmitChangePassword={onChangePassword}
       onSubmitChangeEmail={onChangeEmail}
     />
   );
