@@ -15,7 +15,8 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
   const displayCategories = ["All", "News", "Sport", "Entertainment", "Economy", "Politics", "Tech"]
-  
+  const [currentCategory, setCurrentCategory] = useState("All")
+
   useEffect(() => {
     function handleScroll() {
       const scrolled = window.scrollY;
@@ -33,7 +34,7 @@ export default function Home() {
   
   useEffect(() => {
     if (loadMoreArticles) {
-      fetchMoreArticles(articles[articles.length-1])
+      fetchMoreArticles(currentCategory, articles[articles.length-1])
         .then((_articles) => setArticles([...articles, ..._articles]))
         .then(()=>{
           setLoadMoreArticles(false)
@@ -55,20 +56,29 @@ export default function Home() {
  
   useEffect(()=> {
     setLoading(true)
-    fetchArticles(articles.length).then((_articles) => setArticles([...articles, ..._articles])).then(setLoading(false))
-  }, []);
+    fetchArticles(currentCategory).then((_articles) => setArticles(_articles)).then(setLoading(false))
+  }, [, currentCategory]);
 
   function onArticleView(id) {
     router.push("/articles/" + id);
   }
 
   function handleLogout() {
-    logOut().then(()=>router.reload())
+    logOut().then(()=>router.reload());
+  }
+
+  function handleCategoriesChange(category) {
+    setCurrentCategory(category);
   }
 
   return (
       <div>
-        <Navbar user={user} onLogOut={handleLogout} displayCategories={displayCategories} currentCategory={null} onCategoriesChange={()=>{}}/>
+        <Navbar 
+        user={user} 
+        onLogOut={handleLogout} 
+        displayCategories={displayCategories} 
+        currentCategory={currentCategory} 
+        onCategoriesChange={handleCategoriesChange}/>
         <Container sx={{ py: 8 }} maxWidth="md">
   
           {(loading || articles.length === 0) ? <Loading/>
