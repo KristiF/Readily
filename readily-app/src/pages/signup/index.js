@@ -11,7 +11,7 @@ export default function Signup() {
   const [error, setError] = useState(false);
   const router = useRouter();
 
-  async function handleSignup(userData) {
+  async function handleSignup() {
     signUp(email, password)
     .catch(err => setError(err.message))
     .then(() => {if (user) {router.push("/")}});
