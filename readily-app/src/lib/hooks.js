@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  signOut
 } from "firebase/auth";
 import { onAuthStateChanged, getAuth } from "@firebase/auth";
 import {
@@ -17,7 +18,8 @@ import {
 
 export const UserDataContext = React.createContext({
   user: null,
-  setUser: () => {},
+  savedArticles: [],
+  readArticles : []
 });
 
 // Custom hook to read  auth record and user profile doc
@@ -25,12 +27,13 @@ export const UserDataProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState(null);
-  const [savedArticles, setSavedArticles] = useState(null);
-  const [readArticles, setReadArticles] = useState(null);
+  const [savedArticles, setSavedArticles] = useState([]);
+  const [readArticles, setReadArticles] = useState([]);
 
   useEffect(() => {
     setLoading(true);
     var unsubscribe = onAuthStateChanged(getAuth(), (_user) => {
+      console.log(_user)
       if (_user) setUser(_user);
       setLoading(false);
     });
@@ -38,6 +41,7 @@ export const UserDataProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
+
     if (user) {
       setLoading(true);
       const ref = doc(db, "users", user.uid);
@@ -55,23 +59,23 @@ export const UserDataProvider = ({ children }) => {
   }, [user]);
 
   useEffect(() => {
-    if (user && tokens) {
+    if (user) {
       updateDoc(doc(db, "users", user.uid), {
-        tokens: tokens,
-        unlockedArticles: unlockedArticles,
+        savedArticles: savedArticles,
+        readArticles: readArticles,
       });
     }
   }, [savedArticles, readArticles]);
 
-  function logIn(email, password) {
-    return signInWithEmailAndPassword(auth, email, password);
+  async function logIn(email, password) {
+    return signInWithEmailAndPassword(getAuth(), email, password);
   }
 
-  function logout() {
-    return auth.signOut();
+  async function logOut() {
+    return signOut(getAuth());
   }
 
-  function signup(email, password) {
+  async function signUp(email, password) {
     return createUserWithEmailAndPassword(getAuth(), email, password).then(
       (resp) => {
         setDoc(doc(db, "users", resp.user.uid), {
@@ -89,7 +93,7 @@ export const UserDataProvider = ({ children }) => {
   }
 
   return (
-    <UserDataContext.Provider value={{ user, loading, logIn, logout, signup, likeArticle }}>
+    <UserDataContext.Provider value={{ user, loading, logIn, logOut, signUp, savedArticles, setSavedArticles }}>
       {children}
     </UserDataContext.Provider>
   );
