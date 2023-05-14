@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  updateEmail,
+  updatePassword,
   signOut
 } from "firebase/auth";
 import { onAuthStateChanged, getAuth } from "@firebase/auth";
@@ -73,6 +75,14 @@ export const UserDataProvider = ({ children }) => {
 
   async function logOut() {
     return signOut(getAuth());
+  }
+
+  async function changeEmail(currentUser, newEmail){
+    return updateEmail(currentUser, newEmail)
+  }
+
+  async function changePassword(currentUser, newPassword){
+    return updatePassword(currentUser, newPassword)
   }
 
   async function signUp(email, password) {
