@@ -1,39 +1,88 @@
 import FrontpageCard from "@/components/FrontpageCard";
 import { useState, useEffect } from "react";  
-import { Container, Grid } from "@mui/material";
-import { fetchArticles } from "@/lib/fetchArticles";
+import { CircularProgress, Container, Grid } from "@mui/material";
+import { fetchArticles, fetchMoreArticles } from "@/lib/fetchArticles";
 import Loading from "@/components/Loading";
 import { useContext } from "react";
 import { UserDataContext } from "@/lib/hooks";
-
+import { useRouter } from "next/router";
+import Navbar from "@/components/Navbar";
 
 export default function Home() {
-  const { likeArticle, user } = useContext(UserDataContext);
-  const [articlesPromiseState] = useState({})
-  const [articles, setArticles] = useState(null)
-  const [, reRender] = useState({})
+  const { savedArticles, setSavedArticles, user, logOut } = useContext(UserDataContext);
+  const [articles, setArticles] = useState([])
+  const [loadMoreArticles, setLoadMoreArticles] = useState(false)
   const [loading, setLoading] = useState(false)
+  const router = useRouter()
+  const displayCategories = ["All", "News", "Sport", "Entertainment", "Economy", "Politics", "Tech"]
+  
+  useEffect(() => {
+    function handleScroll() {
+      const scrolled = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const fullHeight = document.body.offsetHeight;
+      if (scrolled + windowHeight >= fullHeight) {
+        setLoadMoreArticles(true);
+      }
+    }
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  
+  useEffect(() => {
+    if (loadMoreArticles) {
+      fetchMoreArticles(articles[articles.length-1])
+        .then((_articles) => setArticles([...articles, ..._articles]))
+        .then(()=>{
+          setLoadMoreArticles(false)
+        })
+    }
+  }, [loadMoreArticles]);
 
-  async function handleLikes(articleId){
-    return await likeArticle(articleId, user.uid)
+  function handleArticleSave(id) {
+    if (user) {
+      if (savedArticles.includes(id)) {
+        setSavedArticles(savedArticles.filter((articleId) => articleId !== id));
+      } else {
+        setSavedArticles([...savedArticles, id]);
+      }
+    } else {
+      router.push("/login");
+    }
   }
-
+ 
   useEffect(()=> {
     setLoading(true)
-    fetchArticles().then((_articles) => setArticles(_articles)).then(setLoading(false))
+    fetchArticles(articles.length).then((_articles) => setArticles([...articles, ..._articles])).then(setLoading(false))
   }, []);
+
+  function onArticleView(id) {
+    router.push("/articles/" + id);
+  }
+
+  function handleLogout() {
+    logOut().then(()=>router.reload())
+  }
 
   return (
       <div>
+        <Navbar user={user} onLogOut={handleLogout} displayCategories={displayCategories} currentCategory={null} onCategoriesChange={()=>{}}/>
         <Container sx={{ py: 8 }} maxWidth="md">
   
-          {(loading || !articles) ? <Loading/>
+          {(loading || articles.length === 0) ? <Loading/>
           :
           <Grid container spacing={4}>
             {articles.map((article) => {
+                if (article.date)
                 return (
                   <Grid item xs={12} key={article.id} sm={6} md={4}>
-                    <FrontpageCard article={article} onLike = {handleLikes}/>
+                    <FrontpageCard 
+                      article={article} 
+                      onArticleSave={handleArticleSave}
+                      onArticleView={onArticleView}
+                      isSaved={user && savedArticles?.includes(article.id)}/>
                   </Grid> 
                 )}
               )}
