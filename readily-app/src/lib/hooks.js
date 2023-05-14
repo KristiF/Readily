@@ -36,7 +36,6 @@ export const UserDataProvider = ({ children }) => {
   useEffect(() => {
     setLoading(true);
     var unsubscribe = onAuthStateChanged(getAuth(), (_user) => {
-      console.log(_user);
       if (_user) setUser(_user);
       setLoading(false);
     });
@@ -53,6 +52,8 @@ export const UserDataProvider = ({ children }) => {
             docSnap.data().lastName
           }`;
           setName(_name);
+          setSavedArticles(docSnap.data().savedArticles);
+          setReadArticles(docSnap.data().readArticles);
         }
         setLoading(false);
       });
@@ -95,11 +96,6 @@ export const UserDataProvider = ({ children }) => {
         });
       }
     );
-  }
-
-  function likeArticle(articleId, uid) {
-    const userDocRef = doc(db, "users", uid);
-    return updateDoc(userDocRef, { savedArticles: arrayUnion(articleId) });
   }
 
   return (

@@ -56,3 +56,11 @@ export async function fetchArticle(id) {
     const docSnap = await getDoc(docRef);
     return docSnap.data();
 }
+
+export async function fetchArticlesId(ids) {
+  const articlesRef = collection(db, "articles");
+  const q = query(articlesRef, where("__name__", "in", ids));
+  const articlesSnap = await getDocs(q);
+  const articles = articlesSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+  return articles;
+}
