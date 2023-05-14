@@ -39,6 +39,7 @@ export default function ProfileCard(props) {
                 autoFocus
                 margin="dense"
                 id="Current Email"
+                error={props.emailError ? true : false}
                 value={props.currentEmail}
                 onChange={props.onChangeCurrentEmail}
                 label={props.currentEmail ? "" : "Current Email"}
@@ -50,6 +51,7 @@ export default function ProfileCard(props) {
                 autoFocus
                 margin="dense"
                 id="New Email"
+                error={props.emailError ? true : false}
                 label={props.newEmail ? "" : "New Email"}
                 value={props.newEmail}
                 onChange={props.onChangeNewEmail}
@@ -77,7 +79,7 @@ export default function ProfileCard(props) {
                 value={props.newPassword}
                 onChange={props.onChangeNewPassword}
                 label="New password"
-                error={props.passwordError}
+                error={props.passwordError ? true : false}
                 type="password"
                 fullWidth
                 variant="standard"
@@ -90,7 +92,7 @@ export default function ProfileCard(props) {
                 onChange={props.onChangeConfirmNewPassword}
                 label="Confirm New Password"
                 type="password"
-                error={props.passwordError}
+                error={props.passwordError ? true : false}
                 fullWidth
                 variant="standard"
               />

@@ -3,27 +3,37 @@ import { useContext, useEffect, useState } from "react";
 import { UserDataContext } from "@/lib/hooks";
 import { useRouter } from "next/router";
 
-
 export default function profile() {
-  const router = useRouter()
+  const router = useRouter();
   const { user, changeEmail, changePassword } = useContext(UserDataContext);
-  const [currentEmail, setCurrentEmail] = useState(null);
-  const [newEmail, setNewEmail] = useState(null);
-  const [newPassword, setNewPassword] = useState(null);
-  const [confirmNewPassword, setConfirmNewPassword] = useState(null);
+  const [currentEmail, setCurrentEmail] = useState("");
+  const [newEmail, setNewEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [emailError, setEmailError] = useState(null);
-  const [passwordError, setPasswordError] = useState(null)
- 
+  const [passwordError, setPasswordError] = useState(null);
+
   function onChangeEmail() {
-    changeEmail(user, newEmail);
-    setCurrentEmail("");
-    setNewEmail("");
+    changeEmail(user, newEmail)
+      .then(() => {
+        setCurrentEmail("");
+        setNewEmail("");
+        setEmailError(null);
+      })
+      .catch((error) => setEmailError(error));
   }
   function onChangePassword() {
-      console.log(newPassword)
-      console.log(confirmNewPassword)
-      if(newPassword == confirmNewPassword){changePassword(user, newPassword);setNewPassword("");setConfirmNewPassword("")}
-      else{setPasswordError("Passwords don't match!")}
+    if (newPassword == confirmNewPassword) {
+      changePassword(user, newPassword)
+        .then(() => {
+          setNewPassword("");
+          setConfirmNewPassword("");
+          setPasswordError(null);
+        })
+        .catch((error) => setPasswordError(error));
+    } else {
+      setPasswordError("Passwords don't match!");
+    }
   }
 
   return (
