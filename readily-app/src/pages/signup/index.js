@@ -13,26 +13,24 @@ export default function Signup() {
   const router = useRouter();
 
   async function handleSignup() {
-    if(email === ""){
-      setError("empty email")
-    }
-
-    else if(confirmPassword === ""){
-      setError("blank confirm field")
-    }
-
-    else if(confirmPassword !== password){
-      setError("no match")
-    }
-    else if (confirmPassword == password) {
+    if (email === "") {
+      setError("empty email");
+    } else if (confirmPassword === "") {
+      setError("blank confirm field");
+    } else if (confirmPassword !== password) {
+      setError("no match");
+    } else if (confirmPassword == password) {
       signUp(email, password)
-        .catch((err) => setError(err.message))
         .then(() => {
-          if (user) {
+          if (!error) {
+            setEmail("");
+            setPassword("");
+            setConfirmPassword("");
             router.push("/");
           }
         })
-        .then(setError(false));
+        .then(setError(false))
+        .catch((err) => setError(err.message));
     }
   }
 
