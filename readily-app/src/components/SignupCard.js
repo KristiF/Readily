@@ -64,38 +64,31 @@ export default function SignupCard(props) {
           component="form"
           noValidate
           onSubmit={handleSubmitACB}
-          sx={{ mt: 3 }}
+          sx={{ mt: 1 }}
         >
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              onChange={props.onEmailChange}
-              value={props.email}
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              onChange={props.onPasswordChange}
-              value={props.password}
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="new-password"
-            />
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth 
-            sx={{ mt: 3, mb: 2 }}
-          >
+          <TextField
+            required
+            fullWidth
+            onChange={props.onEmailChange}
+            value={props.email}
+            id="email"
+            label={props.email ? "" : "Email Address"}
+            name="email"
+            autoComplete="email"
+          />
+
+          <TextField
+            required
+            fullWidth
+            onChange={props.onPasswordChange}
+            value={props.password}
+            name="password"
+            label={props.password ? "" : "Password"}
+            type="password"
+            id="password"
+            autoComplete="new-password"
+          />
+          <Button type="submit" fullWidth sx={{ mt: 3, mb: 2 }}>
             Sign Up
           </Button>
         </Box>

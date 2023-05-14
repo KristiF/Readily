@@ -14,7 +14,7 @@ export default function Signup() {
   async function handleSignup() {
     signUp(email, password)
     .catch(err => setError(err.message))
-    .then(() => {if (user) {router.push("/")}});
+    .then(() => {if (user && !error) {router.push("/")}}).then(setError(false));
   }
 
   return (
