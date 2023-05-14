@@ -16,6 +16,7 @@ export default function SignupCard(props) {
   }
 
   function renderErrors() {
+    console.log(props.error)
     if (props.error) {
       let error;
       switch (props.error) {
@@ -34,7 +35,7 @@ export default function SignupCard(props) {
         case "Firebase: Error (auth/invalid-password).":
           error = "Password must be at least 6 characters long";
           break;
-        case "empty password":
+        case "Firebase: Error (auth/missing-password).":
           error = "Password field cannot be empty";
           break;
         case "blank confirm field":
