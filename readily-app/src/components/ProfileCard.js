@@ -7,6 +7,18 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 
 export default function ProfileCard(props) {
+  function handleEmailChange(event) {
+    event.preventDefault();
+    const userData = new FormData(event.currentTarget);
+    props.onEmailChange(userData);
+  }
+
+  function handlePasswordChange(event) {
+    event.preventDefault();
+    const userData = new FormData(event.currentTarget);
+    props.onPasswordChange(userData);
+  }
+
   return (
     <>
       <Typography variant="h5" align="center" sx={{ marginTop: 5 }}>
@@ -28,32 +40,31 @@ export default function ProfileCard(props) {
               <TextField
                 autoFocus
                 margin="dense"
-                id="name"
+                id="Current Email"
                 label={props.email}
-                type="Password"
+                type="Current Email"
                 fullWidth
                 variant="standard"
               />
               <TextField
                 autoFocus
                 margin="dense"
-                id="name"
+                id="New Email"
                 label="New Email"
-                type="Password"
+                type="New Email"
                 fullWidth
                 variant="standard"
               />
+              <Button
+                size="small"
+                type="submit"
+                variant="outlined"
+                onClick={handleEmailChange}
+              >
+                Change Email
+              </Button>
             </Box>
           </CardContent>
-          <CardActions>
-            <Button
-              size="small"
-              variant="outlined"
-              onClick={props.onEmailChange}
-            >
-              Change Email
-            </Button>
-          </CardActions>
         </Card>
 
         <br />
@@ -65,33 +76,32 @@ export default function ProfileCard(props) {
               <TextField
                 autoFocus
                 margin="dense"
-                id="name"
+                id="Current Password"
                 label="Current password"
-                type="Password"
+                type="Current Password"
                 fullWidth
                 variant="standard"
               />
               <TextField
                 autoFocus
                 margin="dense"
-                id="name"
+                id="New Password"
                 label="New Password"
-                type="Password"
+                type="New Password"
                 fullWidth
                 variant="standard"
               />
+
+              <Button
+                size="small"
+                type="submit"
+                variant="outlined"
+                onClick={handlePasswordChange}
+              >
+                Change Password
+              </Button>
             </Box>
           </CardContent>
-
-          <CardActions>
-            <Button
-              size="small"
-              variant="outlined"
-              onClick={props.onPasswordChange}
-            >
-              Change Password
-            </Button>
-          </CardActions>
         </Card>
       </Box>
     </>
