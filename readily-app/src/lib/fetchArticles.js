@@ -26,6 +26,9 @@ export async function fetchArticles(category="All") {
 }
 
 export async function fetchMoreArticles(category, start) {
+    if (!start) {
+      return;
+    }
     const articlesRef = collection(db, "articles");
     let q;
     (category === "All") ?
