@@ -108,6 +108,8 @@ export const UserDataProvider = ({ children }) => {
         signUp,
         savedArticles,
         setSavedArticles,
+        readArticles,
+        setReadArticles,
         changeEmail,
         changePassword,
       }}
