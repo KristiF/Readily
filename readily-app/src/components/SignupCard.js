@@ -7,7 +7,6 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-
 import { Alert } from "@mui/material";
 
 export default function SignupCard(props) {
@@ -94,8 +93,7 @@ export default function SignupCard(props) {
           </Grid>
           <Button
             type="submit"
-            fullWidth
-            variant="contained"
+            fullWidth 
             sx={{ mt: 3, mb: 2 }}
           >
             Sign Up
