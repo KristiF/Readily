@@ -9,14 +9,12 @@ import TextField from "@mui/material/TextField";
 export default function ProfileCard(props) {
   function handleEmailChange(event) {
     event.preventDefault();
-    const userData = new FormData(event.currentTarget);
-    props.onChangeEmail(userData);
+    props.onSubmitChangeEmail();
   }
 
   function handlePasswordChange(event) {
     event.preventDefault();
-    const userData = new FormData(event.currentTarget);
-    props.onChangePassword(userData);
+    props.onChangePassword();
   }
 
   return (
@@ -41,7 +39,9 @@ export default function ProfileCard(props) {
                 autoFocus
                 margin="dense"
                 id="Current Email"
-                label="Current Email"
+                value={props.currentEmail}
+                onChange={props.onChangeCurrentEmail}
+                label={props.currentEmail ? "" : "Current Email"}
                 type="Current Email"
                 fullWidth
                 variant="standard"
@@ -50,16 +50,14 @@ export default function ProfileCard(props) {
                 autoFocus
                 margin="dense"
                 id="New Email"
-                label="New Email"
+                label={props.newEmail ? "" : "New Email"}
+                value={props.newEmail}
+                onChange={props.onChangeNewEmail}
                 type="New Email"
                 fullWidth
                 variant="standard"
               />
-              <Button
-                size="small"
-                type="submit"
-                variant="outlined"
-              >
+              <Button size="small" type="submit" variant="outlined">
                 Change Email
               </Button>
             </Box>
@@ -91,11 +89,7 @@ export default function ProfileCard(props) {
                 variant="standard"
               />
 
-              <Button
-                size="small"
-                type="submit"
-                variant="outlined"
-              >
+              <Button size="small" type="submit" variant="outlined">
                 Change Password
               </Button>
             </Box>

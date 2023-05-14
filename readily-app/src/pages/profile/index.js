@@ -4,23 +4,34 @@ import { UserDataContext } from "@/lib/hooks";
 
 export default function profile() {
   const { user, changeEmail, changePassword } = useContext(UserDataContext);
-  const [email, setEmail] = useState(null);
+  const [currentEmail, setCurrentEmail] = useState(null);
+  const [newEmail, setNewEmail] = useState(null);
 
   useEffect(() => {
-    console.log(user);
     if (user) {
-      setEmail(user.email);
+      setCurrentEmail(user.email);
     }
   }, [user]);
 
-  function onChangeEmail(userData){console.log(userData.get("Current Email"))}
-  function onChangePassword(userData){console.log(userData)}
+  function onChangeEmail() {
+    changeEmail(user, newEmail)
+    setCurrentEmail("");
+    setNewEmail("");
+  }
+  function onChangePassword() {
+      changePassword(user, newPassword)
+  }
 
   return (
     <ProfileCard
-      email={email}
-      onChangeEmail={onChangeEmail}
+      currentEmail={currentEmail}
+      onChangeCurrentEmail={(alteredCurrentEmail) =>
+        setCurrentEmail(alteredCurrentEmail.target.value)
+      }
+      newEmail={newEmail}
+      onChangeNewEmail={(newEmail) => setNewEmail(newEmail.target.value)}
       onChangePassword={onChangePassword}
+      onSubmitChangeEmail={onChangeEmail}
     />
   );
 }
