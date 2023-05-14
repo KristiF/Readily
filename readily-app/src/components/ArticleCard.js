@@ -24,7 +24,7 @@ export default function ArticleCard(props) {
                     }}
                     >
                         <IconButton onClick={()=>props.onReturn()}>
-                            <KeyboardReturnIcon/>
+                            <KeyboardReturnIcon sx={{color:"white"}}/>
                         </IconButton>
                     </Box>
                 </Box>
