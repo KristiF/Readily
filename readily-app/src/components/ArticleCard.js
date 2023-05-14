@@ -2,8 +2,7 @@ import { Container, Card, CardMedia, Typography, CardContent, CardActions, Butto
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 export default function ArticleCard(props) {
-    const pubDate = new Date(props.props.date["seconds"]*1000)
-    console.log(pubDate)
+    const pubDate = props.props.date ? new Date(props.props.date.seconds * 1000) : null;
     return (
         <Container maxWidth="md" sx={{mt: 1, display:"flex-inline", alignItems:"center", justifyContent:"center"}}>
             <Card>
@@ -32,7 +31,7 @@ export default function ArticleCard(props) {
                 </Box>
                 <CardContent>
                     <Typography variant="h4">{props.props.title}</Typography>
-                    <Typography sx={{fontWeight: 600}} >{pubDate.toDateString()}</Typography>
+                    <Typography sx={{fontWeight: 600}} >{pubDate?.toDateString() ?? ""}</Typography>
                     <Typography paragraph>{props.props.summary}</Typography>
                 </CardContent>
                 <CardActions>

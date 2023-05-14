@@ -37,8 +37,9 @@ export const UserDataProvider = ({ children }) => {
     setLoading(true);
     var unsubscribe = onAuthStateChanged(getAuth(), (_user) => {
       if (_user) setUser(_user);
-      setLoading(false);
+      
     });
+    setLoading(false);
     return unsubscribe;
   }, []);
 

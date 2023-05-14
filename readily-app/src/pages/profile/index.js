@@ -1,10 +1,9 @@
 import ProfileCard from "@/components/ProfileCard";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { UserDataContext } from "@/lib/hooks";
 import { useRouter } from "next/router";
 
-export default function profile() {
-  const router = useRouter();
+export default function Profile() {
   const { user, changeEmail, changePassword } = useContext(UserDataContext);
   const [currentEmail, setCurrentEmail] = useState("");
   const [newEmail, setNewEmail] = useState("");

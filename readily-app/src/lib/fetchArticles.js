@@ -20,9 +20,7 @@ export async function fetchArticles(category="All") {
     );
   const articlesSnap = await getDocs(q);
   const articles = articlesSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-  console.log(`Fetched ${articles.length} articles for category '${category}'`);
   return articles;
-
 }
 
 export async function fetchMoreArticles(category, start) {
