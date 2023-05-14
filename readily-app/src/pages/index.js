@@ -65,7 +65,7 @@ export default function Home() {
   }
 
   function handleLogout() {
-    logOut().then(()=>router.reload());
+    logOut().then(()=>{router.reload()});
   }
 
   function handleCategoriesChange(category) {
