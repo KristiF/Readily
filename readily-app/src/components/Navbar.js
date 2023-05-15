@@ -137,7 +137,7 @@ function Navbar(props) {
               display: { xs: 'none', md: 'flex' }, 
               mt: 1,  
             }} >
-            <Link href="/"><Image alt="logo" src="/logo-inverted.png" width={60} height={60}/></Link>
+            <Link href="/"><Image alt="logo" src="/images/logo-inverted.png" width={60} height={60}/></Link>
           </Toolbar>
 
           <Box sx={{ flexGrow: 0.5, display: { xs: 'flex', md: 'none' } }}>
@@ -175,7 +175,7 @@ function Navbar(props) {
           <Toolbar sx={{
               display: { xs: 'flex', md: 'none' }, mt:1,  
             }}>
-            <Link href="/"><Image alt="logo" src="/logo-inverted.png" width={60} height={60}/></Link>
+            <Link href="/"><Image alt="logo" src="/images/logo-inverted.png" width={60} height={60}/></Link>
           </Toolbar>
 
           {renderAccountSettings()}

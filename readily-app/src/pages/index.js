@@ -1,6 +1,6 @@
 import FrontpageCard from "@/components/FrontpageCard";
 import { useState, useEffect } from "react";  
-import { CircularProgress, Container, Grid } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import { fetchArticles, fetchMoreArticles } from "@/lib/fetchArticles";
 import Loading from "@/components/Loading";
 import { useContext } from "react";

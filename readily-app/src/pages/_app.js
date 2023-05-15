@@ -3,7 +3,8 @@ import Navbar from '@/components/Navbar'
 import { UserDataProvider, UserDataContext } from '@/lib/hooks'
 import { useContext } from 'react'
 import { useRouter } from 'next/router'
-import Loading from '@/components/Loading'
+
+import Head from 'next/head'
 export default function App ({
   Component,
   pageProps: { session, ...pageProps }
@@ -11,6 +12,11 @@ export default function App ({
   return (
     <div>
       <UserDataProvider>
+        <Head>
+          <title>Readily - Summarize the web</title>
+          <meta property="og:title" content="Readily - Summarize the web" key="title" />
+          <link rel="readily logo" href="/images/favicon.ico" />
+        </Head>
         <AppContent Component={Component} pageProps={pageProps} />
       </UserDataProvider>
     </div>
