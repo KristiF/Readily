@@ -24,6 +24,9 @@ export default function ProfileCard(props) {
         case "Firebase: Error (auth/requires-recent-login).":
           error = "Please reautheticate yourself";
           break;
+        case "invalid email":
+          error = "Please enter your current email";
+          break;
         case "empty email field":
           error = "Please enter your current email";
           break;
@@ -37,7 +40,7 @@ export default function ProfileCard(props) {
           error = "You must specify your email adress";
           break;
         case "Firebase: Error (auth/email-already-in-use).":
-          error = "Email already exists";
+          error = "Email already in use";
           break;
         case "Firebase: Error (auth/invalid-email).":
           error = "Invalid email adress";
@@ -70,7 +73,7 @@ export default function ProfileCard(props) {
           error = "Both fields cannot be empty";
           break;
         case "no match":
-          error = "The passwords don't match";
+          error = "The passwords do not match";
           break;
       }
       return <Alert severity="error">{error}</Alert>;
@@ -95,7 +98,7 @@ export default function ProfileCard(props) {
 
         <Card sx={{ minWidth: 500 }}>
           <CardContent>
-            <Typography>Email</Typography>
+            <Typography>Change Email</Typography>
             <Box component="form" onSubmit={handleEmailChange}>
               <TextField
                 autoFocus
@@ -129,7 +132,7 @@ export default function ProfileCard(props) {
 
           {renderPasswordError()}
           <CardContent>
-            <Typography>Password</Typography>
+            <Typography>Change Password</Typography>
             <Box component="form" onSubmit={handlePasswordChange}>
               <TextField
                 autoFocus

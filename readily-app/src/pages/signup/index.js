@@ -22,12 +22,11 @@ export default function Signup() {
     } else if (confirmPassword == password) {
       signUp(email, password)
         .then(() => {
-          if (!error) {
             setEmail("");
             setPassword("");
             setConfirmPassword("");
             router.push("/");
-          }
+          
         })
         .then(setError(false))
         .catch((err) => setError(err.message));

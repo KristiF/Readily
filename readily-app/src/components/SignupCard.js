@@ -16,7 +16,6 @@ export default function SignupCard(props) {
   }
 
   function renderErrors() {
-    console.log(props.error)
     if (props.error) {
       let error;
       switch (props.error) {
@@ -78,7 +77,7 @@ export default function SignupCard(props) {
           <TextField
             required
             fullWidth
-            error={props.error}
+            error={props.error ? true : false}
             onChange={props.onEmailChange}
             value={props.email}
             id="email"
@@ -90,7 +89,7 @@ export default function SignupCard(props) {
           <TextField
             required
             fullWidth
-            error={props.error}
+            error={props.error ? true : false}
             onChange={props.onPasswordChange}
             value={props.password}
             name="password"
@@ -103,7 +102,7 @@ export default function SignupCard(props) {
           <TextField
             required
             fullWidth
-            error={props.error}
+            error={props.error ? true : false}
             onChange={props.onConfirmPasswordChange}
             value={props.confirmPassword}
             name="password"
