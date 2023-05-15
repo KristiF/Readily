@@ -11,6 +11,8 @@ export default function Profile() {
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [passwordConfirm, setPasswordConfirm] = useState(false);
+  const [emailConfirm, setEmailConfirm] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -39,6 +41,7 @@ export default function Profile() {
         .then(() => {
           setCurrentEmail("");
           setNewEmail("");
+          setEmailConfirm(true);
         })
         .then(() => setEmailError(false))
         .catch((error) => setEmailError(error.message));
@@ -50,6 +53,7 @@ export default function Profile() {
         .then(() => {
           setNewPassword("");
           setConfirmNewPassword("");
+          setPasswordConfirm(true)
         })
         .then(setPasswordError(false))
         .catch((error) => setPasswordError(error.message));
@@ -59,14 +63,15 @@ export default function Profile() {
       setPasswordError("empty password");
       return;
     }
-    if (confirmNewPassword === "") {
+    else if (confirmNewPassword === "") {
       setPasswordError("empty confirm password");
       return;
     }
-    if (confirmNewPassword === "" && newPassword === "") {
+    else if (confirmNewPassword === "" && newPassword === "") {
       setPasswordError("both password fields empty");
       return;
-    } else {
+    }
+    else if (newPassword !== confirmNewPassword) {
       setPasswordError("no match");
     }
   }
@@ -79,6 +84,8 @@ export default function Profile() {
       newEmail={newEmail}
       newPassword={newPassword}
       confirmNewPassword={confirmNewPassword}
+      emailConfirm={emailConfirm}
+      passwordConfirm={passwordConfirm} 
       onChangeCurrentEmail={(alteredCurrentEmail) =>
         setCurrentEmail(alteredCurrentEmail.target.value)
       }

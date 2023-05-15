@@ -53,6 +53,8 @@ export default function ProfileCard(props) {
     }
   }
 
+
+
   function renderPasswordError() {
     if (props.passwordError) {
       let error;
@@ -94,6 +96,7 @@ export default function ProfileCard(props) {
           alignItems: "center",
         }}
       >
+        {props.emailConfirm && <Alert severity="success">Email changed successfully</Alert>}
         {renderEmailError()}
 
         <Card sx={{ minWidth: 500 }}>
@@ -129,7 +132,9 @@ export default function ProfileCard(props) {
               </Button>
             </Box>
           </CardContent>
-
+          {props.passwordConfirm &&
+            <Alert severity="success">Password changed successfully</Alert>
+          }
           {renderPasswordError()}
           <CardContent>
             <Typography>Change Password</Typography>
